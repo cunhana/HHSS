@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludoteca: Técnicas de Grupo</title>
+    <!-- Fuentes Modernas: 'Outfit' para textos y 'Fredoka' para títulos divertidos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Paleta de colores Vivos y Modernos */
+            --primary: #FF6B6B;      /* Coral Intenso */
+            --secondary: #4ECDC4;    /* Turquesa */
+            --accent: #FFE66D;       /* Amarillo Sol */
+            --purple: #6C5CE7;       /* Púrpura Creativo */
+            --dark: #2D3436;
+            --light: #F9F9F9;
+            --glass: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: var(--dark);
+            background: linear-gradient(-45deg, #FF9A9E, #FAD0C4, #fad0c4, #a18cd1, #fbc2eb);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Fondo Animado Dinámico */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Contenedor Principal */
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* --- Tipografía Animada --- */
+        h1, h2, h3 {
+            font-family: 'Fredoka', sans-serif;
+            line-height: 1.2;
+        }
+
+        .anim-title {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.8s forwards;
+        }
+
+        .anim-delay-1 { animation-delay: 0.2s; }
+        .anim-delay-2 { animation-delay: 0.4s; }
+
+        @keyframes slideUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Header: Estilo Bento Grid --- */
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 2px 4px 0px rgba(0,0,0,0.1);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .info-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-card h4 {
+            color: var(--primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card p {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* --- Secciones Comunes --- */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .badge-icon {
+            background: var(--accent);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.5rem;
+        }
+
+        /* --- Grid de Fichas (Cards) --- */
+        .fichas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            border: 4px solid transparent;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            border-color: var(--secondary);
+        }
+
+        .card-image-container {
+            height: 200px;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 2rem;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .tag.blue { background-color: var(--secondary); }
+        .tag.green { background-color: var(--primary); }
+        .tag.purple { background-color: var(--purple); }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-card {
+            background: var(--dark);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+
+        .btn-card:hover {
+            background: var(--primary);
+        }
+
+        /* --- MODALES --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            border-radius: 30px;
+            padding: 0;
+            overflow-y: auto;
+            transform: scale(0.8);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 2rem 2.5rem;
+            background: var(--light);
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .close-btn {
+            background: #eee;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            color: var(--dark);
+        }
+
+        .close-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal-body {
+            padding: 2.5rem;
+        }
+
+        .modal-img-local {
+            width: 100%;
+            max-height: 350px;
+            object-fit: contain;
+            border-radius: 15px;
+            margin-top: 1.5rem;
+            background: #fafafa;
+            padding: 10px;
+            border: 2px dashed #ddd;
+        }
+
+        .detail-row {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-title {
+            color: var(--primary);
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* --- Section Simbólica --- */
+        .symbol-container {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            background: linear-gradient(135deg, #6C5CE7, #a29bfe);
+            color: white;
+            padding: 3rem;
+            border-radius: 30px;
+        }
+
+        .symbol-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .symbol-img-deco {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid rgba(255,255,255,0.3);
+            object-fit: cover;
+            flex-shrink: 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .symbol-container { flex-direction: column; text-align: center; }
+            .modal-content { max-height: 85vh; }
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 1.5rem;
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .biblio-link {
+            display: block;
+            color: #b2bec3;
+            text-decoration: none;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: color 0.3s;
+        }
+
+        .biblio-link:hover {
+            color: var(--secondary);
+            padding-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <!-- HEADER -->
+        <header>
+            <h1 class="hero-title anim-title">FICHAS TÉCNICAS</h1>
+            <h2 class="hero-subtitle anim-title anim-delay-1">Ludoteca para niños y niñas de 5-6 años</h2>
+            
+            <div class="info-grid anim-title anim-delay-2">
+                <div class="info-card">
+                    <h4>Elaborado por</h4>
+                    <p>Ana Maria da Cunha</p>
+                </div>
+                <div class="info-card">
+                    <h4>Instituto</h4>
+                    <p>IES Avempace</p>
+                </div>
+                <div class="info-card">
+                    <h4>Profesora</h4>
+                    <p>Beatriz Gracia Sarasa</p>
+                </div>
+                <div class="info-card">
+                    <h4>Fecha</h4>
+                    <p>26/11/2025</p>
+                </div>
+                <div class="info-card">
+                    <h4>Grupo</h4>
+                    <p>6 a 10 Niños/as</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- INTRODUCCIÓN -->
+        <section class="glass-panel anim-title anim-delay-2">
+            <div class="section-header">
+                <div class="badge-icon">👋</div>
+                <h2>Introducción</h2>
+            </div>
+            <p style="font-size: 1.1rem; line-height: 1.8;">
+                Las dinámicas de grupo resultan claves en entornos no formales, como las ludotecas, donde el principal objetivo es el desarrollo integral de los niños y niñas a través del juego, la expresión y la convivencia. Este trabajo elaborado especialmente para grupos de seis a diez pequeños de 5 y 6 años, busca fomentar el conocimiento mutuo, la cohesión grupal y el aprendizaje emocional. <br><br>
+                El enfoque seleccionado parte de la psicopedagogía y se basa en técnicas reconocidas, mezclando recursos tradicionales y un toque personal creativo —incluyendo detalles como el uso simbólico de un <strong>objeto especial relacionado con la actividad</strong>, para trabajar el sentido de pertenencia y conexión tangible entre ellos.
+            </p>
+        </section>
+
+        <!-- GRID DE TARJETAS (FICHAS) -->
+        <section>
+            <h2 style="text-align: center; font-size: 2.5rem; color: white; margin-bottom: 2rem; text-shadow: 2px 2px rgba(0,0,0,0.1);">Las Técnicas de Grupo</h2>
+            
+            <div class="fichas-grid">
+                
+                <!-- CARD 1 -->
+                <article class="card" onclick="openModal('modal1')">
+                    <div class="card-image-container">
+                        <img src="bolapresenta.png" alt="Bola" class="card-img">
+                    </div>
+                    <div class="card-content">
+                        <span class="tag green">Presentación</span>
+                        <h3 class="card-title">La Bola Presentadora</h3>
+                        <p class="card-desc">Facilita la presentación inicial y rompe el hielo mediante el juego y el movimiento.</p>
+                        <span class="btn-card">Ver Ficha Completa →</span>
+                    </div>
+                </article>
+
+                <!-- CARD 2 -->
+                <article class="card" onclick="openModal('modal2')">
+                    <div class="card-image-container">
+                        <img src="cebolla.png" alt="Cebolla" class="card-img">
+                    </div>
+                    <div class="card-content">
+                        <span class="tag blue">Cohesión</span>
+                        <h3 class="card-title">La Cebolla</h3>
+                        <p class="card-desc">Juego cooperativo de contacto cercano para fomentar la unión y protección del grupo.</p>
+                        <span class="btn-card">Ver Ficha Completa →</span>
+                    </div>
+                </article>
+
+                <!-- CARD 3 -->
+                <article class="card" onclick="openModal('modal3')">
+                    <div class="card-image-container">
+                        <img src="globo.png" alt="Globo" class="card-img">
+                    </div>
+                    <div class="card-content">
+                        <span class="tag purple">Emociones</span>
+                        <h3 class="card-title">El Globo que No Cae</h3>
+                        <p class="card-desc">Técnica motriz para trabajar el equipo, la frustración y la alegría conjunta.</p>
+                        <span class="btn-card">Ver Ficha Completa →</span>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN OBJETO SIMBÓLICO -->
+        <section class="glass-panel" style="margin-top: 4rem; padding: 0; border-radius: 30px; overflow: hidden;">
+            <div class="symbol-container">
+                <div class="symbol-content">
+                    <h3>El Valor del Objeto Simbólico</h3>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">
+                        En la educación infantil, el uso de un <strong>objeto simbólico</strong> (como una pelota, una mascota de peluche, cojines o pegatinas) actúa como un "ancla" para la atención. Estos objetos no son meros juguetes, sino herramientas pedagógicas que materializan conceptos abstractos, ayudando a focalizar la energía del grupo y a establecer reglas de forma lúdica.
+                    </p>
+                </div>
+                <img src="https://images.unsplash.com/photo-1516627145497-ae6963d5c954?q=80&w=1000&auto=format&fit=crop" alt="Juguetes Simbólicos" class="symbol-img-deco">
+            </div>
+        </section>
+
+        <!-- CONCLUSIONES -->
+        <section class="glass-panel" style="text-align: center;">
+            <div class="section-header" style="justify-content: center;">
+                <div class="badge-icon">✨</div>
+                <h2>Conclusiones</h2>
+            </div>
+            <p style="font-size: 1.2rem; max-width: 800px; margin: 0 auto;">
+                La selección de estas dinámicas responde al interés de ofrecer recursos variados adaptados al momento evolutivo de niños y niñas de 5-6 años. El uso de <strong>elementos lúdicos tangibles</strong> enriquece el vínculo con el juego y aporta un valor diferencial. Esta implementación consciente permite desarrollar autoestima, valores y competencias sociales en un entorno lúdico.
+                <br><br>
+                <strong style="color: var(--primary);">¡A disfrutar jugando y aprendiendo!</strong>
+            </p>
+        </section>
+
+    </div> <!-- Fin Wrapper -->
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <h3 style="margin-bottom: 2rem;">Bibliografía y Webgrafía</h3>
+            <div style="text-align: left;">
+                <a href="#" class="biblio-link">1. RedEduca. (2023). Actividades para incluir en una ludoteca infantil.</a>
+                <a href="#" class="biblio-link">2. Psicología y Mente. (2025). 14 Dinámicas de Integración Grupal.</a>
+                <a href="#" class="biblio-link">3. Extraescolares y Ocio. (2019). Los mejores juegos para practicar en la ludoteca.</a>
+                <a href="#" class="biblio-link">4. Sitly. (2025). Más de 25 juegos para niños de 5 a 6 años.</a>
+                <a href="#" class="biblio-link">5. Manual de Técnicas y Dinámicas (PDF).</a>
+                <a href="#" class="biblio-link">6. Ejemplo de Fichas – Dinámica de Grupos. Studocu.</a>
+                <a href="#" class="biblio-link">7. Fichero de Juegos. (2024). 10 dinámicas de grupo.</a>
+            </div>
+            <p style="margin-top: 3rem; font-size: 0.8rem; opacity: 0.5;">Diseño Web Educativo Moderno • 2025</p>
+        </div>
+    </footer>
+
+    <!-- MODALES (CONTENIDO OCULTO) -->
+    
+    <!-- Modal 1: Bola -->
+    <div id="modal1" class="modal-overlay" onclick="closeModal(event, 'modal1')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="color: var(--primary);">La Bola Presentadora</h3>
+                <button class="close-btn" onclick="forceClose('modal1')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="detail-row">
+                    <p class="detail-title">🎯 Objetivos</p>
+                    <ul style="padding-left: 1.5rem;">
+                        <li>Facilitar la presentación inicial y romper el hielo.</li>
+                        <li>Favorecer el aprendizaje de los nombres y características.</li>
+                        <li>Iniciar el proceso de cohesión grupal y confianza.</li>
+                    </ul>
+                </div>
+                <div class="detail-row">
+                    <p class="detail-title">👥 Destinatarios</p>
+                    <p>Niños y niñas de 5 a 6 años. Grupo de 6 a 10. Carácter activo.</p>
+                </div>
+                <div class="detail-row">
+                    <p class="detail-title">🛠️ Recursos</p>
+                    <p>Pelota ligera o <strong>Mascota del Aula</strong> (peluche). Espacio amplio.</p>
+                </div>
+                <div class="detail-row">
+                    <p class="detail-title">🚀 Desarrollo</p>
+                    <ol style="padding-left: 1.5rem;">
+                        <li>Formar círculo (sentados o de pie).</li>
+                        <li>Lanzar la bola/peluche. Quien recibe dice su nombre y algo que le guste.</li>
+                        <li>Pasar a otra persona.</li>
+                        <li>Variante: Usar un sombrero divertido para indicar el turno de palabra.</li>
+                    </ol>
+                    <p style="margin-top: 0.5rem;"><strong>Tiempo:</strong> 15 minutos
