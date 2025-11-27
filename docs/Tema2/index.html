@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tema 2 – Habilidades | Animación y Dinámica de Grupos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Ana Maria da Cunha Goncalves" />
+  <style>
+    /* ========= RESET SENCILLO ========= */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+      color: #111;
+      line-height: 1.6;
+      /* Fondo asimétrico: combinación de gradiente arcoíris + forma orgánica */
+      background:
+        radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.6) 0, transparent 55%),
+        radial-gradient(circle at 80% 0, rgba(255, 255, 255, 0.4) 0, transparent 60%),
+        radial-gradient(circle at 0 100%, rgba(0, 0, 0, 0.18) 0, transparent 55%),
+        linear-gradient(135deg,
+          #ff5f6d 0%,
+          #ffc371 15%,
+          #fffa65 30%,
+          #7bed9f 45%,
+          #70a1ff 60%,
+          #a55eea 75%,
+          #ff6b81 90%);
+      background-attachment: fixed;
+    }
+
+    /* CAPA PARA DAR CONTRASTE AL CONTENIDO */
+    .page-wrapper {
+      min-height: 100vh;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.94),
+        rgba(255, 255, 255, 0.9)
+      );
+      backdrop-filter: blur(6px);
+    }
+
+    /* ========= CABECERA Y NAV ========= */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 95, 109, 0.95),
+        rgba(255, 250, 101, 0.95),
+        rgba(112, 161, 255, 0.95),
+        rgba(165, 94, 234, 0.95)
+      );
+      color: #111;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(8px);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.7rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    /* Títulos 3D */
+    .logo-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow:
+        0 1px 0 #f39c12,
+        0 2px 0 #d35400,
+        0 3px 0 #c0392b,
+        0 4px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    .logo-subtitle {
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: #111;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      transition: transform 0.12s ease, box-shadow 0.12s ease,
+        background 0.12s ease, color 0.12s ease;
+    }
+
+    nav a:hover {
+      transform: translateY(-1px);
+      background: #111;
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    /* ========= LAYOUT PRINCIPAL ========= */
+    main {
+      max-width: 1200px;
+      margin: 1.5rem auto 2rem;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(260px, 1.2fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ========= PANEL LATERAL ========= */
+    aside {
+      position: sticky;
+      top: 4.1rem;
+      align-self: flex-start;
+      max-height: calc(100vh - 5rem);
+      overflow: auto;
+      padding-right: 0.2rem;
+    }
+
+    .card {
+      background: #ffffffdd;
+      border-radius: 18px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      color: #222;
+    }
+
+    .rainbow-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      background: linear-gradient(
+        90deg,
+        #ff5f6d,
+        #ffc371,
+        #fffa65,
+        #7bed9f,
+        #70a1ff,
+        #a55eea
+      );
+      color: #111;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+
+    .toc-list {
+      list-style: none;
+      font-size: 0.85rem;
+    }
+
+    .toc-list li {
+      margin: 0.25rem 0;
+    }
+
+    .toc-list a {
+      color: #333;
+      text-decoration: none;
+      padding: 0.12rem 0.2rem;
+      border-radius: 6px;
+      transition: background 0.1s ease;
+    }
+
+    .toc-list a:hover {
+      background: rgba(255, 95, 109, 0.12);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.05);
+      margin: 0.1rem 0.15rem 0.15rem 0;
+    }
+
+    /* ========= TÍTULOS Y SECCIONES ========= */
+    section {
+      margin-bottom: 1.8rem;
+      padding: 1.1rem 1.1rem 1.3rem;
+      border-radius: 18px;
+      background: #ffffffd8;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+      position: relative;
+      overflow: hidden;
+    }
+
+    section::before {
+      content: "";
+      position: absolute;
+      top: -60px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle at center, rgba(255, 95, 109, 0.2), transparent 70%);
+      transform: rotate(-12deg);
+      pointer-events: none;
+    }
+
+    h1,
+    h2 {
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.4rem;
+      color: #111;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-shadow:
+        0 1px 0 #f1c40f,
+        0 2px 0 #e67e22,
+        0 3px 0 #c0392b;
+    }
+
+    .subtitle-main {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 0.4rem;
+    }
+
+    .author-line {
+      font-size: 0.8rem;
+      color: #444;
+      margin-bottom: 0.3rem;
+    }
+
+    .centered {
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin-bottom: 0.4rem;
+      color: #222;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      text-shadow:
+        0 1px 0 #fff,
+        0 2px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      margin-top: 0.7rem;
+      margin-bottom: 0.25rem;
+      color: #222;
+    }
+
+    p {
+      font-size: 0.95rem;
+      margin-bottom: 0.35rem;
+    }
+
+    ul {
+      margin-left: 1.1rem;
+      margin-bottom: 0.4rem;
+      font-size: 0.94rem;
+    }
+
+    li {
+      margin-bottom: 0.18rem;
+    }
+
+    strong {
+      font-weight: 700;
+    }
+
+    /* ========= ACORDEONES ========= */
+    details {
+      margin-top: 0.4rem;
+      margin-bottom: 0.4rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 0.5rem 0.7rem;
+    }
+
+    details[open] {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      border-color: rgba(255, 95, 109, 0.45);
+    }
+
+    summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .summary-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .summary-badge {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      padding: 0.12rem 0.4rem;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ff5f6d, #fffa65, #70a1ff);
+      color: #111;
+      font-weight: 700;
+    }
+
+    .details-content {
+      margin-top: 0.4rem;
+      border-top: 1px dashed rgba(0, 0, 0, 0.06);
+      padding-top: 0.4rem;
+    }
+
+    /* ========= CHIPS / BADGES ========= */
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0.3rem 0;
+    }
+
+    .chip {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.09);
+    }
+
+    .chip--good {
+      background: rgba(46, 213, 115, 0.14);
+      border-color: rgba(46, 213, 115, 0.6);
+    }
+
+    .chip--warn {
+      background: rgba(255, 177, 66, 0.14);
+      border-color: rgba(255, 177, 66, 0.7);
+    }
+
+    .chip--bad {
+      background: rgba(255, 118, 117, 0.16);
+      border-color: rgba(255, 118, 117, 0.7);
+    }
+
+    /* ========= ETIQUETA DE SECCIÓN ========= */
+    .section-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #888;
+      margin-bottom: 0.35rem;
+    }
+
+    /* ========= FOOTER ========= */
+    footer {
+      max-width: 1200px;
+      margin: 0 auto 1.5rem;
+      padding: 0 1rem;
+      font-size: 0.8rem;
+      color: #333;
+      text-align: center;
+    }
+
+    .footer-inner {
+      background: #ffffffd8;
+      border-radius: 16px;
+      padding: 0.7rem 1rem;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(0, 0, 0, 0.03);
+    }
+
+    .footer-inner span {
+      font-weight: 600;
+    }
+
+    /* ========= SCROLLBAR LIGERO ========= */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.18);
+      border-radius: 999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.32);
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <!-- ================= CABECERA ================= -->
+    <header>
+      <div class="header-inner">
+        <div>
+          <div class="logo-title">Tema 2 · Habilidades</div>
+          <div class="logo-subtitle">Animación y Dinámica de Grupos · IES Avempace</div>
+        </div>
+        <nav aria-label="Navegación principal">
+          <a href="#intro">Inicio</a>
+          <a href="#que-es-grupo">Grupos</a>
+          <a href="#potencialidades">Potencialidades</a>
+          <a href="#roles">Roles</a>
+          <a href="#liderazgo">Liderazgo</a>
+          <a href="#tecnicas">Técnicas</a>
+          <a href="#motivacion">Motivación</a>
+          <a href="#cohesion">Cohesión</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ================= CONTENIDO PRINCIPAL ================= -->
+    <main>
+      <!-- ======== COLUMNA PRINCIPAL ======== -->
+      <div>
+        <!-- INTRO -->
+        <section id="intro">
+          <div class="section-label">Presentación</div>
+          <h1>Animación y Dinámica de Grupos</h1>
+          <p class="subtitle-main">
+            Guía completa sobre el trabajo con grupos: conceptos, roles, liderazgo, motivación, técnicas y dinámica grupal.
+          </p>
+          <p class="author-line">
+            Autora: <strong>Ana Maria da Cunha Goncalves</strong> · Tema 2 Habilidades · IES Avempace
+          </p>
+          <p>
+            Este material explica, de forma clara, qué es un grupo, cómo funciona,
+            qué fases atraviesa, qué roles aparecen, cómo se ejerce el liderazgo,
+            qué es la dinámica de grupos y qué técnicas se pueden usar para
+            mejorar la participación, la cohesión y los resultados del trabajo
+            en equipo, tanto en contextos educativos como sociales y
+            profesionales.
+          </p>
+        </section>
+
+        <!-- 1. QUÉ ES UN GRUPO -->
+        <section id="que-es-grupo">
+          <div class="section-label">Bloque 1</div>
+          <h2>1. ¿Qué es un Grupo?</h2>
+
+          <h3>Definición básica</h3>
+          <p>
+            Un grupo es más que personas juntas: es un
+            <strong>conjunto de personas</strong> que:
+          </p>
+          <ul>
+            <li>Participan en una misma <strong>estructura vivencial colectiva</strong>.</li>
+            <li>Se <strong>comunican</strong> entre sí de forma continuada.</li>
+            <li>Tienen una <strong>finalidad u objetivo común</strong>.</li>
+            <li>Desarrollan <strong>normas de convivencia</strong> (explícitas o implícitas).</li>
+            <li>Comparten una <strong>conciencia de grupo</strong> (“nosotros”).</li>
+          </ul>
+
+          <details>
+            <summary>
+              <span class="summary-label">
+                <span class="summary-badge">Clave</span> Diferencia entre grupo y simple agrupación
+              </span>
+            </summary>
+            <div class="details-content">
+              <p>
+                Una simple agrupación aparece cuando personas coinciden en un
+                lugar sin interacción ni objetivos compartidos. Un grupo, en
+                cambio, tiene:
+              </p>
+              <ul>
+                <li>Interacción real.</li>
+                <li>Objetivos comunes.</li>
+                <li>Normas y roles.</li>
+                <li>Conciencia de pertenencia.</li>
+              </ul>
+              <p>
+                Esta estructura hace que el grupo tenga un
+                <strong>gran potencial educativo, creativo y motivador</strong>.
+              </p>
+            </div>
+          </details>
+
+          <h3>Límites del grupo</h3>
+          <p>Los grupos marcan sus fronteras a través de varios criterios:</p>
+          <ul>
+            <li>Ubicación geográfica.</li>
+            <li>Tradiciones y cultura compartida.</li>
+            <li>Concepciones políticas o religiosas.</li>
+            <li>Profesión u ocupación.</li>
+            <li>Parentesco o vínculos familiares.</li>
+          </ul>
+          <p>
+            Aunque cambien los miembros, la <strong>identidad del grupo</strong>
+            (un partido, una empresa, una asociación) puede mantenerse.
+          </p>
+        </section>
+
+        <!-- 2. POTENCIALIDADES Y ETAPAS -->
+        <section id="potencialidades">
+          <div class="section-label">Bloque 2</div>
+          <h2>2. Potencialidades y Etapas del Grupo</h2>
+
+          <h3>Potencial del trabajo en grupo</h3>
+          <ul>
+            <li><strong>Pensamiento enriquecido:</strong> varias perspectivas mejoran las soluciones.</li>
+            <li><strong>Aprovechamiento de la diversidad:</strong> habilidades, experiencias y emociones distintas se complementan.</li>
+            <li><strong>Aprendizaje de habilidades sociales:</strong> se aprende a manejar conflictos y a cooperar.</li>
+            <li><strong>Socialización:</strong> se interiorizan normas y reglas de convivencia.</li>
+            <li><strong>Experiencia gratificante:</strong> trabajar en cooperación suele ser motivador y placentero.</li>
+            <li><strong>Estructura del pensamiento:</strong> se organizan ideas en torno a una meta común.</li>
+            <li><strong>Sentimiento de pertenencia:</strong> se crea un grupo de referencia y apoyo.</li>
+            <li><strong>Desarrollo de valores:</strong> respeto, diálogo, responsabilidad, empatía, asertividad, etc.</li>
+          </ul>
+
+          <h3>Etapas del ciclo de vida del grupo</h3>
+          <ul>
+            <li>
+              <strong>Nacimiento:</strong> aparece un objetivo común y se inicia la
+              interacción.
+            </li>
+            <li>
+              <strong>Crecimiento:</strong> se definen mejor los roles y las
+              funciones de cada miembro.
+            </li>
+            <li>
+              <strong>Maduración:</strong> máxima identificación grupal y
+              <strong>mayor rendimiento</strong>.
+            </li>
+            <li>
+              <strong>Muerte:</strong> el grupo se disuelve cuando desaparece su
+              finalidad (por ejemplo, al terminar un curso).
+            </li>
+          </ul>
+        </section>
+
+        <!-- 3. CRITERIOS DE CLASIFICACIÓN -->
+        <section id="clasificacion">
+          <div class="section-label">Bloque 3</div>
+          <h2>3. Criterios de Clasificación de Grupos</h2>
+
+          <h3>3.1 Según el afecto</h3>
+          <ul>
+            <li>
+              <strong>Grupos primarios:</strong> pocos miembros y fuerte carga
+              afectiva (ej.: familia).
+            </li>
+            <li>
+              <strong>Grupos secundarios:</strong> relaciones más frías,
+              formales e impersonales (ej.: empresa, clase).
+            </li>
+          </ul>
+
+          <h3>3.2 Según la estructura</h3>
+          <ul>
+            <li>
+              <strong>Formales:</strong> muy organizados, con metas y
+              objetivos definidos desde fuera (ej.: grupo de trabajo).
+            </li>
+            <li>
+              <strong>Informales:</strong> más espontáneos, menos organizados,
+              orientados a necesidades afectivas (ej.: grupo de amigos).
+            </li>
+          </ul>
+
+          <h3>3.3 Según el número de miembros</h3>
+          <ul>
+            <li><strong>Grandes:</strong> más de 12–15 personas (según contexto).</li>
+            <li><strong>Pequeños:</strong> menos de 12–15 personas.</li>
+          </ul>
+
+          <h3>3.4 Según los objetivos</h3>
+          <ul>
+            <li><strong>Grupos de trabajo:</strong> centrados en la tarea.</li>
+            <li>
+              <strong>Grupos de formación:</strong> se analizan el
+              funcionamiento, la comunicación y las relaciones.
+            </li>
+            <li>
+              <strong>Grupos de sensibilización:</strong> para resolver
+              conflictos o problemáticas específicas (ej.: terapéuticos).
+            </li>
+          </ul>
+
+          <h3>3.5 Según la relación entre individuos</h3>
+          <ul>
+            <li>
+              <strong>Muchedumbre:</strong> más de 50 personas, poca relación y emotividad contagiosa.
+            </li>
+            <li>
+              <strong>Banda:</strong> pocos individuos con fuerte afinidad.
+            </li>
+            <li>
+              <strong>Agrupamiento:</strong> tamaño variado, reuniones frecuentes, objetivos comunes, pero relaciones superficiales.
+            </li>
+            <li>
+              <strong>Grupo primario:</strong> pequeño, afectivo, íntimo, con cohesión.
+            </li>
+            <li>
+              <strong>Grupo secundario:</strong> incluye varios grupos primarios (escuela, empresa…).
+            </li>
+          </ul>
+
+          <h3>3.6 Según la relación del individuo con su grupo</h3>
+          <ul>
+            <li>
+              <strong>Grupo de pertenencia:</strong> se pertenece de forma involuntaria
+              (familia, barrio, clase).
+            </li>
+            <li>
+              <strong>Grupo de referencia:</strong> se toman sus valores como modelo.
+              <ul>
+                <li><strong>Función normativa:</strong> orienta la conducta ante dudas.</li>
+                <li><strong>Función comparativa:</strong> sirve para valorar la propia conducta.</li>
+              </ul>
+            </li>
+          </ul>
+
+          <h3>3.7 Según la constitución del grupo</h3>
+          <ul>
+            <li>
+              <strong>Formales:</strong> creados para un objetivo (equipo docente, grupo de clase…).
+            </li>
+            <li>
+              <strong>Informales:</strong> espontáneos, basados en simpatía (amistades).
+            </li>
+            <li>
+              <strong>Por designación externa:</strong> definidos por otros (indigentes,
+              emigrantes…).
+            </li>
+          </ul>
+        </section>
+
+        <!-- 4. ROLES -->
+        <section id="roles">
+          <div class="section-label">Bloque 4</div>
+          <h2>4. Los Roles en el Seno del Grupo</h2>
+
+          <h3>4.1 ¿Qué es un rol?</h3>
+          <p>
+            Un <strong>rol</strong> es el papel o función que una persona cumple
+            dentro de un grupo concreto. Una misma persona puede desempeñar
+            roles distintos en grupos diferentes (líder en el trabajo, seguidor
+            en la familia, organizador en amistades).
+          </p>
+
+          <p>Los roles dependen de:</p>
+          <ul>
+            <li>La consecución de los objetivos del grupo.</li>
+            <li>El grado de estructura y rigidez del grupo.</li>
+            <li>La especialización de los miembros.</li>
+          </ul>
+
+          <h3>4.2 Tipos de roles</h3>
+
+          <details>
+            <summary>
+              <span class="summary-label">
+                <span class="summary-badge">Rol</span> Centrados en la tarea
+              </span>
+            </summary>
+            <div class="details-content">
+              <p>
+                Favorecen la actividad del grupo. Quien asume este rol suele:
+              </p>
+              <ul>
+                <li>Tomar iniciativas para resolver situaciones.</li>
+                <li>Aportar ideas, sugerencias e información.</li>
+                <li>Dar su opinión e invitar a los demás a expresarse.</li>
+                <li>Aclarar y resumir ideas.</li>
+                <li>Conducir al grupo hacia decisiones concretas.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span class="summary-label">
+                <span class="summary-badge">Rol</span> Centrados en la cohesión
+              </span>
+            </summary>
+            <div class="details-content">
+              <p>
+                Buscan mantener la unidad del grupo. Quien asume este rol suele:
+              </p>
+              <ul>
+                <li>Buscar soluciones a conflictos.</li>
+                <li>Velar porque nadie quede fuera.</li>
+                <li>Favorecer una buena comunicación entre todos.</li>
+                <li>Comprometerse con la tarea y con el grupo.</li>
+                <li>Animar a que cada persona asuma responsabilidades.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span class="summary-label">
+                <span class="summary-badge">Rol</span> Obstaculizadores
+              </span>
+            </summary>
+            <div class="details-content">
+              <p>
+                Dificultan el trabajo grupal porque buscan su propia
+                satisfacción:
+              </p>
+              <ul>
+                <li>Desprecian a otros miembros.</li>
+                <li>Se oponen sistemáticamente.</li>
+                <li>Manipulan o intentan controlar al grupo.</li>
+                <li>Quieren ser el centro de atención.</li>
+              </ul>
+            </div>
+          </details>
+        </section>
+
+        <!-- 5. LIDERAZGO -->
+        <section id="liderazgo">
+          <div class="section-label">Bloque 5</div>
+          <h2>5. Liderazgo en el Grupo</h2>
+
+          <h3>5.1 ¿Qué es un líder?</h3>
+          <p>
+            El <strong>líder</strong> es quien ejerce la función de liderazgo:
+          </p>
+          <ul>
+            <li>Se convierte en el centro de la estructura del grupo.</li>
+            <li>Orienta y conduce al grupo hacia sus objetivos.</li>
+            <li>Mantiene la cohesión y favorece la actividad.</li>
+          </ul>
+          <p>
+            El líder puede ser <strong>impuesto</strong> (por una jerarquía) o
+            <strong>emergente</strong> (surge de forma natural).
+          </p>
+
+          <h3>5.2 Estilos de liderazgo</h3>
+
+          <details>
+            <summary>
+              <span class="summary-label">
+                <span class="summary-badge">Estilo</span> Autoritario
+              </span>
+            </summary>
+            <div class="details-content">
+              <ul>
+                <li>Decide directrices, fines y medios sin consultar.</li>
+                <li>Reparte tareas sin contar con el grupo.</li>
+                <li>Intenta imponer su voluntad.</li>
+                <li>Desconfía de la iniciativa de los demás.</li>
+                <li>
+                  Resultado: grupo poco cohesionado, buen rendimiento solo
+                  cuando el líder está presente.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span class="summary-label">
+                <span class="summary-badge">Estilo</span> Permisivo (laissez-faire)
+              </span>
+            </summary>
+            <div class="details-content">
+              <ul>
+                <li>Interviene muy poco o nada.</li>
+                <li>Actitud indiferente o “bonachona”.</li>
+                <li>Deja que el grupo actúe sin orientación.</li>
+                <li>
+                  Resultado: confusión, individualismo, baja cooperación,
+                  riesgo alto de disgregación.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span class="summary-label">
+                <span class="summary-badge">Estilo</span> Democrático
+              </span>
+            </summary>
+            <div class="details-content">
+              <ul>
+                <li>Propone objetivos y medios, escuchando al grupo.</li>
+                <li>Negocia y acuerda el reparto de tareas.</li>
+                <li>Confía en las capacidades del grupo.</li>
+                <li>Fomenta la participación en decisiones.</li>
+                <li>
+                  Resultado: comunicación fluida, creatividad, autonomía,
+                  rendimiento alto y estable.
+                </li>
+              </ul>
+            </div>
+          </details>
+        </section>
+
+        <!-- 6. DINÁMICA DE GRUPOS -->
+        <section id="dinamica">
+          <div class="section-label">Bloque 6</div>
+          <h2>6. Dinámica de Grupos</h2>
+
+          <p>
+            La <strong>dinámica de grupos</strong> es la disciplina que estudia
+            cómo se forman, desarrollan y funcionan los grupos:
+          </p>
+          <ul>
+            <li>Procesos de formación y desarrollo.</li>
+            <li>Problemas grupales.</li>
+            <li>Leyes, fuerzas y relaciones de interdependencia internas.</li>
+          </ul>
+          <p>
+            Es teoría sobre el funcionamiento grupal. No debe confundirse con
+            las <strong>técnicas de grupo</strong>, que son herramientas
+            prácticas para intervenir y mejorar esa dinámica.
+          </p>
+        </section>
+
+        <!-- 7. TÉCNICAS DE GRUPO -->
+        <section id="tecnicas">
+          <div class="section-label">Bloque 7</div>
+          <h2>7. Técnicas de Grupo</h2>
+
+          <h3>7.1 ¿Qué es una técnica de grupo?</h3>
+          <p>
+            Es un <strong>procedimiento estandarizado</strong> que una persona
+            coordina para estructurar la actividad del grupo y lograr
+            determinados objetivos.
+          </p>
+          <ul>
+            <li>Integran teoría y práctica.</li>
+            <li>Son participativas.</li>
+            <li>Desarrollan habilidades cognitivas, sociales y emocionales.</li>
+            <li>Aumentan progresivamente la profundidad de trabajo.</li>
+            <li>Favorecen el aprendizaje significativo.</li>
+            <li>Requieren implicación personal.</li>
+            <li>No son solo “juegos”: son medios, no fines.</li>
+          </ul>
+
+          <h3>7.2 Criterios de selección de técnicas</h3>
+
+          <details>
+            <summary>
+              <span class="summary-label">
+                <span class="summary-badge">Criterio</span> Objetivos
+              </span>
+            </summary>
+            <div class="details-content">
+              <p>Algunos objetivos posibles:</p>
+              <ul>
+                <li>Presentar o conocer a los miembros del grupo.</li>
+                <li>Resolver o prevenir conflictos.</li>
+                <li>Facilitar la desinhibición y la expresión.</li>
+                <li>Generar diversión y buen clima.</li>
+                <li>Crear ambiente de confianza.</li>
+                <li>Potenciar creatividad y reflexión.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span class="summary-label">
+                <span class="summary-badge">Criterio</span> Características del grupo
+              </span>
+            </summary>
+            <div class="details-content">
+              <ul>
+                <li>Madurez del grupo (inicio, consolidado…).</li>
+                <li>Edad, intereses, nivel educativo y cultural.</li>
+                <li>Número de participantes (tamaño del grupo).</li>
+                <li>Duración del grupo (estable u ocasional).</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span class="summary-label">
+                <span class="summary-badge">Criterio</span> Recursos disponibles
+              </span>
+            </summary>
+            <div class="details-content">
+              <ul>
+                <li>Espacio físico adecuado.</li>
+                <li>Tiempo suficiente (incluyendo explicación y evaluación).</li>
+                <li>Recursos humanos (quién conduce y ayuda).</li>
+                <li>Materiales necesarios, probados previamente.</li>
+              </ul>
+            </div>
+          </details>
+
+          <h3>7.3 Tipos de técnicas de grupo</h3>
+          <ul>
+            <li><strong>Presentación:</strong> para romper el hielo y conocerse.</li>
+            <li><strong>Conocimiento de grupo:</strong> profundizar relaciones.</li>
+            <li><strong>Creación de ambiente:</strong> relajar y dinamizar.</li>
+            <li><strong>Trabajo de valores:</strong> diálogo, respeto, responsabilidad.</li>
+            <li><strong>Creatividad:</strong> activar ideas nuevas.</li>
+            <li><strong>Evaluación:</strong> valorar procesos y resultados.</li>
+          </ul>
+          <p>
+            Una misma técnica puede servir para varias funciones, dependiendo
+            de cómo se aplique.
+          </p>
+
+          <h3>7.4 Ficha técnica de una técnica de grupo</h3>
+          <p>
+            Es útil crear un “banco de técnicas” con fichas que incluyan:
+          </p>
+          <ul>
+            <li>Título y código de clasificación.</li>
+            <li>Destinatarios (edad, tamaño, características).</li>
+            <li>Objetivos y contenidos.</li>
+            <li>Desarrollo paso a paso y tiempos.</li>
+            <li>Recursos (materiales, espacio, tiempo total).</li>
+            <li>Variantes y observaciones.</li>
+          </ul>
+        </section>
+
+        <!-- 8. ANÁLISIS DE GRUPO: SOCIOGRAMA Y ROL -->
+        <section id="analisis">
+          <div class="section-label">Bloque 8</div>
+          <h2>8. Análisis de Grupos: Sociograma y Juego de Rol</h2>
+
+          <h3>8.1 Sociometría y sociograma</h3>
+          <p>
+            La <strong>sociometría</strong> estudia de forma cuantitativa las
+            relaciones dentro de un grupo. Su herramienta principal es el
+            <strong>sociograma</strong>, un gráfico que muestra:
+          </p>
+          <ul>
+            <li>Grado de cohesión.</li>
+            <li>Atracciones y rechazos.</li>
+            <li>Subgrupos.</li>
+            <li>Posición de cada miembro.</li>
+          </ul>
+
+          <h3>8.2 Pasos para elaborar un sociograma</h3>
+          <ul>
+            <li>
+              Formular preguntas sencillas y claras sobre preferencias y
+              rechazos.
+            </li>
+            <li>
+              Recoger respuestas en una tabla con nombres y elecciones/rechazos.
+            </li>
+            <li>
+              Representar gráficamente con símbolos (círculos, triángulos,
+              flechas).
+            </li>
+            <li>
+              Analizar la estructura:
+              <ul>
+                <li><strong>Líder:</strong> recibe muchas elecciones.</li>
+                <li><strong>Integrado:</strong> recibe varias elecciones.</li>
+                <li><strong>Marginado:</strong> no recibe, pero sí elige.</li>
+                <li><strong>Aislado:</strong> ni elige ni es elegido.</li>
+              </ul>
+            </li>
+          </ul>
+
+          <h3>8.3 Juego de rol</h3>
+          <p>
+            El <strong>juego de rol</strong> consiste en representar una
+            situación real asumiendo diferentes papeles para comprender
+            distintas perspectivas.
+          </p>
+          <p>Pasos básicos:</p>
+          <ul>
+            <li>Definir el problema y los objetivos de la representación.</li>
+            <li>Identificar personajes y seleccionar participantes.</li>
+            <li>Preparar la escena y explicar brevemente el contexto.</li>
+            <li>Realizar la representación.</li>
+            <li>Debatir y reflexionar después sobre lo ocurrido.</li>
+          </ul>
+        </section>
+
+        <!-- 9. MOTIVACIÓN Y GRUPO -->
+        <section id="motivacion">
+          <div class="section-label">Bloque 9</div>
+          <h2>9. Motivación y Trabajo en Grupo</h2>
+
+          <h3>9.1 ¿Qué es la motivación?</h3>
+          <p>
+            La <strong>motivación</strong> es el conjunto de procesos que
+            activan, dirigen y mantienen la conducta. No es exactamente
+            interés, necesidad o valor, aunque se relaciona con todos ellos.
+          </p>
+
+          <h3>9.2 Necesidades que cubre el grupo</h3>
+          <ul>
+            <li>
+              <strong>Afiliación:</strong> sentirse parte de algo.
+            </li>
+            <li>
+              <strong>Estima y reconocimiento:</strong> sentirse valorado.
+            </li>
+            <li>
+              <strong>Seguridad:</strong> sentirse protegido dentro del grupo.
+            </li>
+          </ul>
+
+          <h3>9.3 Teorías sobre motivación (resumen)</h3>
+
+          <details>
+            <summary>
+              <span class="summary-label">
+                <span class="summary-badge">Teoría</span> Pirámide de Maslow
+              </span>
+            </summary>
+            <div class="details-content">
+              <ul>
+                <li>Las necesidades se organizan en niveles (fisiológicas, seguridad, afiliación, estima, autorrealización).</li>
+                <li>Solo las <strong>necesidades no satisfechas</strong> guían la conducta.</li>
+                <li>Las necesidades de <strong>pertenencia</strong> se relacionan directamente con el grupo.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span class="summary-label">
+                <span class="summary-badge">Teoría</span> Cognitivistas y logro
+              </span>
+            </summary>
+            <div class="details-content">
+              <ul>
+                <li>La conducta se guía por la anticipación de metas.</li>
+                <li>Importan el nivel de aspiración y la distancia a la meta.</li>
+                <li>
+                  <strong>Motivación de logro:</strong> orienta a buscar el éxito o evitar el fracaso.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span class="summary-label">
+                <span class="summary-badge">Teoría</span> Intrínseca
+              </span>
+            </summary>
+            <div class="details-content">
+              <ul>
+                <li>Se activa ante estímulos novedosos y sorprendentes.</li>
+                <li>Genera curiosidad e interés por explorar.</li>
+                <li>Es clave para el aprendizaje profundo y autónomo.</li>
+              </ul>
+            </div>
+          </details>
+
+          <h3>9.4 Pautas para aumentar la motivación en el grupo</h3>
+          <ul>
+            <li>Promover el <strong>trabajo cooperativo</strong> y los logros grupales.</li>
+            <li>Ajustar tareas a las características de cada persona.</li>
+            <li>Hacer el trabajo estimulante (retos, creatividad, sentido).</li>
+            <li>Evaluar resultados y ofrecer <strong>reconocimiento</strong>.</li>
+            <li>Fomentar la motivación <strong>intrínseca</strong> (curiosidad, reto razonable).</li>
+            <li>Evitar recompensas externas que quiten autonomía.</li>
+            <li>Fijar objetivos concretos, desafiantes y alcanzables.</li>
+          </ul>
+        </section>
+
+        <!-- 10. PERTENENCIA Y COHESIÓN -->
+        <section id="cohesion">
+          <div class="section-label">Bloque 10</div>
+          <h2>10. Pertenencia y Cohesión</h2>
+
+          <h3>10.1 Necesidad de pertenencia</h3>
+          <p>
+            La necesidad de pertenecer a grupos es <strong>muy potente</strong>
+            en el ser humano y se relaciona con la supervivencia. Muchas
+            conductas buscan:
+          </p>
+          <ul>
+            <li>Ganar aceptación social.</li>
+            <li>Asegurar la inclusión.</li>
+            <li>Ajustarse a criterios grupales.</li>
+          </ul>
+
+          <h3>10.2 Aspectos negativos de la pertenencia</h3>
+          <ul>
+            <li>Puede fomentar bandas, violencia, xenofobia y fanatismo.</li>
+            <li>Dificulta romper relaciones dañinas.</li>
+            <li>La exclusión se usa como castigo (prisión, exilio).</li>
+          </ul>
+
+          <h3>10.3 Cohesión</h3>
+          <p>
+            La <strong>cohesión</strong> indica hasta qué punto el grupo se
+            siente unido y satisfecho consigo mismo.
+          </p>
+          <ul>
+            <li>Aumenta la cooperación y la solidaridad.</li>
+            <li>Eleva la autoestima de los miembros.</li>
+            <li>Mejora el rendimiento y la comunicación.</li>
+          </ul>
+
+          <h3>10.4 Factores que influyen en la cohesión</h3>
+          <ul>
+            <li>
+              <strong>Internos:</strong> atracción entre personas, objetivos
+              comunes, valores compartidos, satisfacción de necesidades.
+            </li>
+            <li>
+              <strong>Externos:</strong> estilo de liderazgo, relación con el entorno, dependencia de otras entidades.
+            </li>
+          </ul>
+
+          <h3>10.5 Disgregación</h3>
+          <p>
+            Ocurre cuando el grupo se dispersa y debilita, por ejemplo, si:
+          </p>
+          <ul>
+            <li>Los objetivos son poco claros.</li>
+            <li>Las dificultades superan al grupo.</li>
+            <li>El clima afectivo es tenso y no se gestiona.</li>
+            <li>Hay desorganización constante.</li>
+          </ul>
+
+          <h3>10.6 Estrategias para favorecer la cohesión</h3>
+          <ul>
+            <li>Crear un clima afectivo positivo y respetuoso.</li>
+            <li>Disponer de un espacio cómodo y adecuado.</li>
+            <li>Definir bien los objetivos y las tareas.</li>
+            <li>Ser flexibles y adaptarse a los cambios.</li>
+          </ul>
+        </section>
+
+        <!-- 11. EQUIPO DE TRABAJO Y COMUNICACIÓN -->
+        <section id="equipo">
+          <div class="section-label">Bloque 11</div>
+          <h2>11. Equipo de Trabajo y Comunicación</h2>
+
+          <h3>11.1 Equipo de trabajo</h3>
+          <p>
+            Un <strong>equipo de trabajo</strong> es un tipo de grupo donde
+            diferentes profesionales desarrollan funciones distintas según su
+            rol. Suele ser multidisciplinar y tiene una dinámica propia.
+          </p>
+
+          <h3>11.2 Roles en el equipo de trabajo</h3>
+
+          <details>
+            <summary>
+              <span class="summary-label">
+                <span class="summary-badge">Rol</span> Por participación
+              </span>
+            </summary>
+            <div class="details-content">
+              <ul>
+                <li>
+                  <strong>Profesional pasivo:</strong> no participa ni aporta;
+                  frecuente en estructuras muy jerarquizadas.
+                </li>
+                <li>
+                  <strong>Rol de “ataque”:</strong> lleva la contraria, ve al
+                  resto como rivales; no suele aportar de forma constructiva.
+                </li>
+                <li>
+                  <strong>Rol de búsqueda de reconocimiento:</strong> participa
+                  mucho pero buscando admiración más que eficacia.
+                </li>
+                <li>
+                  <strong>Rol “todo es opinable”:</strong> siempre quiere
+                  mejorar lo dicho; puede ser positivo si no alarga reuniones
+                  sin fin.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span class="summary-label">
+                <span class="summary-badge">Rol</span> Por tarea
+              </span>
+            </summary>
+            <div class="details-content">
+              <ul>
+                <li>
+                  <strong>Coordinador-moderador:</strong> organiza sesiones, modera debates,
+                  reconduce conflictos, busca consensos.
+                </li>
+                <li>
+                  <strong>Secretario:</strong> registra acuerdos, decisiones y
+                  asuntos pendientes.
+                </li>
+                <li>
+                  <strong>Observador:</strong> analiza la dinámica, detecta
+                  roles y propone mejoras.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <h3>11.3 Poder y liderazgo en el equipo</h3>
+          <p>
+            El poder puede ser <strong>positivo</strong> (favorece la
+            participación, reconduce conflictos, mejora la eficacia) o
+            <strong>negativo</strong> (genera competitividad, subgrupos, bloqueos).
+          </p>
+
+          <h3>11.4 Estilos de liderazgo en el equipo</h3>
+          <ul>
+            <li>
+              <strong>Autocrático:</strong> poder concentrado, comunicación
+              unidireccional, pocos opinan.
+            </li>
+            <li>
+              <strong>Democrático:</strong> poder repartido, estructura
+              horizontal, acuerdos por consenso.
+            </li>
+            <li>
+              <strong>Laissez-faire:</strong> falta de organización y dificultad
+              para acordar y sistematizar.
+            </li>
+          </ul>
+        </section>
+
+        <!-- 12. COOPERACIÓN Y COMUNICACIÓN -->
+        <section id="cooperacion">
+          <div class="section-label">Bloque 12</div>
+          <h2>12. Cooperación y Comunicación en el Grupo</h2>
+
+          <h3>12.1 Cooperación</h3>
+          <p>
+            <strong>Cooperar</strong> no es solo participar: es aportar de forma
+            <strong>positiva</strong> a la tarea grupal.
+          </p>
+          <ul>
+            <li>Se valoran y aprovechan las ideas de los demás.</li>
+            <li>Se busca mejorar, no destruir lo que otro propone.</li>
+            <li>
+              Se produce una “multiplicación cooperativa”: una idea genera otra
+              que, sola, no habría aparecido.
+            </li>
+          </ul>
+
+          <h3>12.2 Obstáculos a la comunicación</h3>
+          <ul>
+            <li>
+              <strong>Estructuras muy jerárquicas:</strong> hablan siempre las
+              mismas personas, el resto solo escucha.
+            </li>
+            <li>
+              <strong>Participación inadecuada:</strong> comunicación de
+              oposición (solo para llevar la contraria) o de existencia (“hablo
+              para que se note que estoy”).
+            </li>
+          </ul>
+
+          <h3>12.3 Escucha problemática</h3>
+          <p>
+            Cuando no se valora lo que se dice, se genera sensación de
+            inferioridad, frustración o desconexión: “oigo, pero no escucho”.
+          </p>
+
+          <h3>12.4 Mejorar la comunicación en el equipo</h3>
+          <ul>
+            <li>Reconocer la valía profesional de todas las personas.</li>
+            <li>Buscar el éxito cooperativo, no la competición.</li>
+            <li>
+              Practicar la <strong>escucha activa</strong>, sin cortar
+              intervenciones.
+            </li>
+            <li>
+              Rescatar lo positivo de cada aportación y luego señalar lo que se
+              puede mejorar.
+            </li>
+            <li>
+              Evitar prejuicios personales y centrarse en la tarea profesional.
+            </li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- ======== COLUMNA LATERAL ======== -->
+      <aside>
+        <div class="card">
+          <div class="rainbow-pill">Mapa del tema</div>
+          <h3>Índice rápido</h3>
+          <ul class="toc-list">
+            <li><a href="#intro">Introducción</a></li>
+            <li><a href="#que-es-grupo">1. ¿Qué es un grupo?</a></li>
+            <li><a href="#potencialidades">2. Potencialidades y etapas</a></li>
+            <li><a href="#clasificacion">3. Clasificación de grupos</a></li>
+            <li><a href="#roles">4. Roles en el grupo</a></li>
+            <li><a href="#liderazgo">5. Liderazgo</a></li>
+            <li><a href="#dinamica">6. Dinámica de grupos</a></li>
+            <li><a href="#tecnicas">7. Técnicas de grupo</a></li>
+            <li><a href="#analisis">8. Sociograma y rol</a></li>
+            <li><a href="#motivacion">9. Motivación</a></li>
+            <li><a href="#cohesion">10. Pertenencia y cohesión</a></li>
+            <li><a href="#equipo">11. Equipo de trabajo</a></li>
+            <li><a href="#cooperacion">12. Cooperación y comunicación</a></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Palabras clave</h3>
+          <div>
+            <span class="tag">Grupo</span>
+            <span class="tag">Roles</span>
+            <span class="tag">Liderazgo</span>
+            <span class="tag">Cohesión</span>
+            <span class="tag">Motivación</span>
+            <span class="tag">Pertenencia</span>
+            <span class="tag">Técnicas de grupo</span>
+            <span class="tag">Sociograma</span>
+            <span class="tag">Juego de rol</span>
+            <span class="tag">Equipo de trabajo</span>
+            <span class="tag">Comunicación</span>
+            <span class="tag">Cooperación</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Enfoque pedagógico</h3>
+          <p style="font-size:0.85rem; margin-bottom:0.4rem;">
+            Este tema integra teoría y práctica para que el alumnado entienda qué
+            es un grupo y sepa dinamizarlo en contextos reales (aula, intervención
+            social, trabajo en equipo).
+          </p>
+          <div class="chip-row">
+            <span class="chip chip--good">Aprendizaje cooperativo</span>
+            <span class="chip chip--good">Habilidades sociales</span>
+            <span class="chip chip--warn">Gestión de conflictos</span>
+            <span class="chip chip--good">Participación activa</span>
+            <span class="chip chip--bad">Roles obstaculizadores</span>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+      <div class="footer-inner">
+        <span>Tema 2 Habilidades – Animación y Dinámica de Grupos</span> · IES Avempace ·
+        Autora: Ana Maria da Cunha Goncalves
+      </div>
+    </footer>
+  </div>
+
+  <!-- JS mínimo solo para evitar que los <details> se abran/cierren todos a la vez por error de click anidado en algunos navegadores antiguos -->
+  <script>
+    document.querySelectorAll("details").forEach(det => {
+      det.addEventListener("click", e => {
+        // Evita que se colapse inmediatamente cuando se hace click en elementos internos raros
+        const isSummary = e.target.tagName.toLowerCase() === "summary";
+        if (!isSummary && !e.target.closest("summary")) return;
+      });
+    });
+  </script>
+</body>
+</html>
